@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: false
+    autoconfigure: false
+    public: false
+
+  App\EventListener\ExceptionConverter:
+    arguments:
+    - '@request_stack'
+    - '@serializer'
+    tags:
+    - { name: kernel.event_listener, event: kernel.exception }

@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: false
+    public: false
+    tags:
+    - { name: validator.constraint_validator }
+
+  App\Constraint\:
+    resource: '%kernel.project_dir%/src/Constraint/'
+
+  App\Constraint\WorkingVkCommunityValidator:
+    arguments:
+    - '%env.vk_community_id%'

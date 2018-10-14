@@ -1,0 +1,8 @@
+parameters:
+  locale: 'en'
+
+  # map environment variables to parameters
+  env.vk_community_id: '%env(VK_COMMUNITY_ID)%'
+  env.vk_callback_confirmation_token: '%env(VK_CALLBACK_CONFIRMATION_TOKEN)%'
+  env.vk_api_access_token: '%env(VK_API_ACCESS_TOKEN)%'
+  env.twitch_username: '%env(TWITCH_USERNAME)%'

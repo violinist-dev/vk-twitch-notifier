@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Recreate DB" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/bin/console" scriptParameters="cache:clear">
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Drop DB" run_configuration_type="PhpLocalRunConfigurationType" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Create DB" run_configuration_type="PhpLocalRunConfigurationType" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Update schema" run_configuration_type="PhpLocalRunConfigurationType" />
+    </method>
+  </configuration>
+</component>
