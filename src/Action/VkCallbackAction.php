@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Action;
 
 use App\DeserializationHandler;
@@ -18,14 +20,14 @@ class VkCallbackAction
     private $deserializationHandler;
 
     /**
-     * @var VkCallbackRequestTypeDetector
-     */
-    private $vkCallbackRequestTypeDetector;
-
-    /**
      * @var string
      */
     private $vkCallbackConfirmationToken;
+
+    /**
+     * @var VkCallbackRequestTypeDetector
+     */
+    private $vkCallbackRequestTypeDetector;
 
     public function __construct(
         DeserializationHandler $deserializationHandler,
@@ -35,27 +37,6 @@ class VkCallbackAction
         $this->deserializationHandler = $deserializationHandler;
         $this->vkCallbackRequestTypeDetector = $vkCallbackRequestTypeDetector;
         $this->vkCallbackConfirmationToken = $vkCallbackConfirmationToken;
-    }
-
-    /**
-     * @Route("/vk-callback", name="vk_callback", methods={"POST"})
-     */
-    public function __invoke(): Response
-    {
-        $callbackType = $this->vkCallbackRequestTypeDetector->getCallbackType();
-
-        if ($callbackType === null) {
-            return new Response('unsupported callback type', Response::HTTP_BAD_REQUEST);
-        }
-
-        if ($callbackType->equals(new VkCallbackRequestType(VkCallbackRequestType::CONFIRMATION))) {
-            return $this->handleConfirmationCallback();
-
-        } elseif ($callbackType->equals(new VkCallbackRequestType(VkCallbackRequestType::MESSAGE_NEW))) {
-            return $this->handleMessageNewCallback();
-        }
-
-        throw new RuntimeException('Unhandled callback type: ' . $callbackType->getValue());
     }
 
     private function handleConfirmationCallback(): Response
@@ -74,5 +55,25 @@ class VkCallbackAction
             'ok',
             Response::HTTP_OK
         );
+    }
+
+    /**
+     * @Route("/vk-callback", name="vk_callback", methods={"POST"})
+     */
+    public function __invoke(): Response
+    {
+        $callbackType = $this->vkCallbackRequestTypeDetector->getCallbackType();
+
+        if ($callbackType === null) {
+            return new Response('unsupported callback type', Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($callbackType->equals(new VkCallbackRequestType(VkCallbackRequestType::CONFIRMATION))) {
+            return $this->handleConfirmationCallback();
+        } elseif ($callbackType->equals(new VkCallbackRequestType(VkCallbackRequestType::MESSAGE_NEW))) {
+            return $this->handleMessageNewCallback();
+        }
+
+        throw new RuntimeException('Unhandled callback type: ' . $callbackType->getValue());
     }
 }

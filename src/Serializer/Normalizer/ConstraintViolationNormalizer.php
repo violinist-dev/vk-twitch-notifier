@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Serializer\Normalizer;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -15,7 +17,7 @@ class ConstraintViolationNormalizer implements NormalizerInterface, NormalizerAw
 
     /**
      * @param ConstraintViolationInterface $object
-     * @param mixed|null          $format
+     * @param mixed|null                   $format
      *
      * @return array|bool|float|int|string
      */

@@ -21,7 +21,7 @@ class WorkingVkCommunityValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
+     * @param mixed              $value
      * @param WorkingVkCommunity $constraint
      */
     public function validate($value, Constraint $constraint): void

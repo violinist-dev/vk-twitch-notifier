@@ -10,17 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class VkCallbackActionTest extends AbstractFunctionalTest
 {
-    public function testUnknownCallbackType(): void
-    {
-        $response = $this->request('POST', '/vk-callback', [
-            'type' => 'unknown_type',
-        ]);
-
-        $this->assertStatusCode(Response::HTTP_BAD_REQUEST);
-
-        Assert::assertEquals('unsupported callback type', $response->getContent());
-    }
-
     public function testSuccessfulConfirmationCallback(): void
     {
         $response = $this->request('POST', '/vk-callback', [
@@ -31,6 +20,17 @@ class VkCallbackActionTest extends AbstractFunctionalTest
         $this->assertStatusCode(Response::HTTP_OK);
 
         Assert::assertEquals($this->vkCallbackConfirmationToken, $response->getContent());
+    }
+
+    public function testUnknownCallbackType(): void
+    {
+        $response = $this->request('POST', '/vk-callback', [
+            'type' => 'unknown_type',
+        ]);
+
+        $this->assertStatusCode(Response::HTTP_BAD_REQUEST);
+
+        Assert::assertEquals('unsupported callback type', $response->getContent());
     }
 
     public function testUnsuccessfulConfirmationCallback(): void
@@ -53,9 +53,9 @@ class VkCallbackActionTest extends AbstractFunctionalTest
             'violations' => [
                 [
                     'propertyPath' => 'groupId', // TODO: Replace with group_id
-                    'message' => 'This VK community is not supported by the service.'
-                ]
-            ]
+                    'message' => 'This VK community is not supported by the service.',
+                ],
+            ],
         ]), $response->getContent());
     }
 }

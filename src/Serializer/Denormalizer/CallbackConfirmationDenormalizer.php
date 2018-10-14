@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Serializer\Denormalizer;
 
 use App\Dto\CallbackConfirmationRequest;
 use App\Exception\DeserializationFailedException;
-use function App\traversableToArray;
 use App\ValueObject\CallbackConfirmation;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use function App\traversableToArray;
 
 class CallbackConfirmationDenormalizer implements DenormalizerInterface
 {
@@ -25,9 +27,13 @@ class CallbackConfirmationDenormalizer implements DenormalizerInterface
     }
 
     /**
+     * @param mixed      $data
+     * @param mixed      $class
+     * @param mixed|null $format
+     *
      * @return CallbackConfirmation
      */
-    public function denormalize($data, $class, $format = null, array $context = array())
+    public function denormalize($data, $class, $format = null, array $context = [])
     {
         if ($this->supportsDenormalization($data, $class, $format) === false) {
             throw new InvalidArgumentException('Could not denormalize the object');

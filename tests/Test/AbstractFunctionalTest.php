@@ -4,24 +4,22 @@ declare(strict_types=1);
 
 namespace App\Tests\Test;
 
-use LogicException;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractFunctionalTest extends WebTestCase
 {
     /**
-     * @var int
-     */
-    protected $vkCommunityId;
-
-    /**
      * @var string
      */
     protected $vkCallbackConfirmationToken;
+
+    /**
+     * @var int
+     */
+    protected $vkCommunityId;
 
     /**
      * @var Client

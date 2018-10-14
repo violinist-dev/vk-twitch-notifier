@@ -21,9 +21,13 @@
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^5.0",
+        "friendsofphp/php-cs-fixer": "^2.13",
+        "phpstan/phpstan": "^0.10.3",
+        "phpstan/phpstan-symfony": "^0.10.1",
         "phpunit/phpunit": "^7.4",
         "symfony/browser-kit": "*",
-        "symfony/dotenv": "*"
+        "symfony/dotenv": "*",
+        "vimeo/psalm": "^2.0"
     },
     "config": {
         "preferred-install": {
@@ -54,10 +58,29 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "php bin/console cache:clear"
+            "bin/console cache:clear"
         ],
         "post-update-cmd": [
-            "php bin/console cache:clear"
+            "bin/console cache:clear"
+        ],
+        "app:fix-cs": [
+            "vendor/bin/php-cs-fixer fix --config=.php_cs --verbose --show-progress=dots --allow-risky=yes"
+        ],
+        "app:lint": [
+            "@app:lint-php-cs-fixer",
+            "@app:lint-yaml"
+        ],
+        "app:lint-php-cs-fixer": [
+            "vendor/bin/php-cs-fixer fix --config=.php_cs --verbose --show-progress=dots --allow-risky=yes --dry-run"
+        ],
+        "app:lint-yaml": [
+            "yamllint --config-file=.yamllint config docs .gitlab-ci.yml .yamllint"
+        ],
+        "app:recreate-db": [
+            "php bin/console cache:clear",
+            "php bin/console doctrine:database:drop --force --if-exists",
+            "php bin/console doctrine:database:create",
+            "php bin/console doctrine:schema:update --force"
         ],
         "app:test": [
             "php bin/console cache:clear --env=test",
@@ -66,11 +89,30 @@
         "app:test-with-coverage": [
             "php bin/console cache:clear --env=test",
             "php -d memory_limit=2048M vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never"
+        ],
+        "app:analyze-phpstan": [
+            "php bin/console cache:clear --env=test",
+            "php -d memory_limit=2048M vendor/bin/phpstan analyse --configuration=phpstan.neon --no-interaction"
+        ],
+        "app:analyze-psalm": [
+            "vendor/bin/psalm --config=psalm.xml"
+        ],
+        "app:static-analysis": [
+            "@app:analyze-phpstan",
+            "@app:analyze-psalm"
         ]
     },
     "scripts-descriptions": {
+        "app:fix-cs": "Fix code style in PHP files.",
+        "app:lint": "Check PHP files for style errors without fixing it (same as 'app:fix-cs' script, but without fixing).",
+        "app:lint-php-cs-fixer": "Check PHP files for style errors using PHP-CS-Fixer rules.",
+        "app:lint-yaml": "Check YAML files for style errors using yamllint rules.",
+        "app:recreate-db": "Recreate database.",
         "app:test": "Run tests.",
-        "app:test-with-coverage": "Run tests with coverage report."
+        "app:test-with-coverage": "Run tests with coverage report.",
+        "app:analyze-phpstan": "Runs static analysis on PHP code with PHPStan.",
+        "app:analyze-psalm": "Runs static analysis on PHP code with Psalm.",
+        "app:static-analysis": "Runs static analysis on PHP code."
     },
     "conflict": {
         "symfony/symfony": "*"

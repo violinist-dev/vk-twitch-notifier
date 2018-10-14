@@ -12,14 +12,14 @@ use Symfony\Component\Serializer\SerializerInterface;
 class DeserializationHandler
 {
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * @var RequestStack
      */
     private $requestStack;
+
+    /**
+     * @var SerializerInterface
+     */
+    private $serializer;
 
     public function __construct(
         SerializerInterface $serializer,
