@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<psalm
+    totallyTyped="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config"
+>
+    <projectFiles>
+        <directory name="src" />
+
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <LessSpecificReturnType errorLevel="info" />
+        <MixedArgument errorLevel="suppress" />
+        <MixedOperand errorLevel="suppress" />  <!-- 2 issues -->
+        <MoreSpecificImplementedParamType errorLevel="suppress" />
+        <MixedAssignment errorLevel="suppress" />
+        <NullableReturnStatement errorLevel="suppress" /> <!-- 3 issues -->
+        <RedundantConditionGivenDocblockType errorLevel="suppress" />
+        <InvalidNullableReturnType errorLevel="suppress" />
+        <ImplementedReturnTypeMismatch errorLevel="suppress" />
+        <MixedMethodCall errorLevel="suppress" />
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <MixedArrayAccess errorLevel="suppress" />
+        <UnresolvableInclude errorLevel="suppress" /> <!-- 1 issue -->
+        <PossiblyNullReference errorLevel="suppress" />
+        <MixedTypeCoercion errorLevel="suppress" />
+    </issueHandlers>
+</psalm>
