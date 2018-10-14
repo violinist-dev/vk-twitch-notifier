@@ -8,5 +8,3 @@ services:
 
   App\Serializer\Normalizer\:
     resource: '%kernel.project_dir%/src/Serializer/Normalizer/'
-
-
