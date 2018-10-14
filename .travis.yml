@@ -5,6 +5,7 @@ php:
 cache:
   directories:
   - 'vendor'
+  - 'venv'
 
 env:
   global:
@@ -15,7 +16,7 @@ env:
   - VK_API_ACCESS_TOKEN=cbafc32e071edced419509a79d35259961aa3eaf3b4a28710eb48270c2769d0588490f135e79bde80ffe2
   - TWITCH_USERNAME=tijoe
 
-  - APP_ENV=dev
+  - APP_ENV=test
   - APP_SECRET=9d7eb543c117e03e262083074f1ee345
 
   - DATABASE_HOST=localhost
@@ -27,50 +28,78 @@ env:
 services:
 - 'postgresql'
 
-before_install:
-# Disable Xdebug
-- phpenv config-rm xdebug.ini || return 0
-
-# Install pip
-- sudo apt-get -qq install -y python-pip
-
-# Install & setup virtualenv
-- pip install --user --upgrade --quiet --disable-pip-version-check virtualenv
-- virtualenv venv
-- source venv/bin/activate
-
-install:
-- composer install --no-progress --no-suggest --no-interaction
-- pip install --quiet --disable-pip-version-check --requirement requirements.txt
-
-before_script:
-# Disable Xdebug
-- phpenv config-rm xdebug.ini || return 0
-
 jobs:
   include:
+  - stage: 'Installing dependencies'
+    name: 'Composer'
+    before_script:
+    # Disable Xdebug
+    - phpenv config-rm xdebug.ini || return 0
+
+    script:
+    - composer install --no-progress --no-suggest --no-interaction
+
+  - stage: 'Installing dependencies'
+    name: 'pip'
+    before_script:
+    # Install pip
+    - sudo apt-get -qq install -y python-pip
+
+    # Install & setup virtualenv
+    - pip install --user --upgrade --quiet --disable-pip-version-check virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+
+    script:
+    - pip install --quiet --disable-pip-version-check --requirement requirements.txt
+
   - stage: 'Code analysis'
-    name: 'Lint code using yamllint'
+    name: 'yamllint'
+    before_script:
+    # Activate virtualenv
+    - source venv/bin/activate
+
     script:
     - composer app:lint-yaml
 
   - stage: 'Code analysis'
-    name: 'Lint code using PHP-CS-Fixer'
+    name: 'PHP-CS-Fixer'
+    before_script:
+    # Disable Xdebug
+    - phpenv config-rm xdebug.ini || return 0
+
     script:
     - composer app:lint-php-cs-fixer
 
   - stage: 'Code analysis'
-    name: 'Analyze code using PHPStan'
-    script:
+    name: 'PHPStan'
+    before_script:
+    # Disable Xdebug
+    - phpenv config-rm xdebug.ini || return 0
+
+    # Clear cache with warmup to generate container XML file
     - bin/console cache:clear
+
+    script:
     - composer app:analyze-phpstan
 
   - stage: 'Code analysis'
-    name: 'Analyze code using Psalm'
+    name: 'Psalm'
+    before_script:
+    # Disable Xdebug
+    - phpenv config-rm xdebug.ini || return 0
+
     script:
     - composer app:analyze-psalm
 
   - stage: 'Tests'
-    name: 'Test app with PHPUnit'
+    name: 'PHPUnit'
+    before_script:
+    # Disable Xdebug
+    - phpenv config-rm xdebug.ini || return 0
+
+    # Recreate database
+    - composer app:recreate-db
+
     script:
     - composer app:test

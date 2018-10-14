@@ -1,11 +1,10 @@
 includes:
-- vendor/phpstan/phpstan-symfony/extension.neon
+- 'vendor/phpstan/phpstan-symfony/extension.neon'
 
 parameters:
   level: 6
-  tmpDir: %rootDir%/../../../var/phpstan
+  tmpDir: '%rootDir%/../../../var/phpstan'
   paths:
-  - %rootDir%/../../../src
+  - '%rootDir%/../../../src'
   symfony:
-    container_xml_path: %rootDir%/../../../var/cache/test/srcTestDebugProjectContainer.xml
-
+    container_xml_path: '%rootDir%/../../../var/cache/test/srcTestDebugProjectContainer.xml'
