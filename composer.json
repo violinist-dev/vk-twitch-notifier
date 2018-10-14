@@ -86,10 +86,6 @@
             "php bin/console cache:clear --env=test",
             "php -d memory_limit=2048M vendor/bin/phpunit --configuration phpunit.xml"
         ],
-        "app:test-with-coverage": [
-            "php bin/console cache:clear --env=test",
-            "php -d memory_limit=2048M vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never"
-        ],
         "app:analyze-phpstan": [
             "php bin/console cache:clear --env=test",
             "php -d memory_limit=2048M vendor/bin/phpstan analyse --configuration=phpstan.neon --no-interaction"
@@ -109,7 +105,6 @@
         "app:lint-yaml": "Check YAML files for style errors using yamllint rules.",
         "app:recreate-db": "Recreate database.",
         "app:test": "Run tests.",
-        "app:test-with-coverage": "Run tests with coverage report.",
         "app:analyze-phpstan": "Runs static analysis on PHP code with PHPStan.",
         "app:analyze-psalm": "Runs static analysis on PHP code with Psalm.",
         "app:static-analysis": "Runs static analysis on PHP code."

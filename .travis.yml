@@ -1,0 +1,76 @@
+language: 'php'
+php:
+- '7.2'
+
+cache:
+  directories:
+  - 'vendor'
+
+env:
+  global:
+  - APP_TIMEZONE=UTC
+
+  - VK_COMMUNITY_ID=123
+  - VK_CALLBACK_CONFIRMATION_TOKEN=17d23e42
+  - VK_API_ACCESS_TOKEN=cbafc32e071edced419509a79d35259961aa3eaf3b4a28710eb48270c2769d0588490f135e79bde80ffe2
+  - TWITCH_USERNAME=tijoe
+
+  - APP_ENV=dev
+  - APP_SECRET=9d7eb543c117e03e262083074f1ee345
+
+  - DATABASE_HOST=localhost
+  - DATABASE_PORT=5432
+  - DATABASE_USER=postgres
+  - DATABASE_PASSWORD=
+  - DATABASE_DBNAME=vk-twitch-notifier
+
+services:
+- 'postgresql'
+
+before_install:
+# Disable Xdebug
+- phpenv config-rm xdebug.ini || return 0
+
+# Install pip
+- sudo apt-get -qq install -y python-pip
+
+# Install & setup virtualenv
+- pip install --user --upgrade --quiet --disable-pip-version-check virtualenv
+- virtualenv venv
+- source venv/bin/activate
+
+install:
+- composer install --no-progress --no-suggest --no-interaction
+- pip install --quiet --disable-pip-version-check --requirement requirements.txt
+
+before_script:
+# Disable Xdebug
+- phpenv config-rm xdebug.ini || return 0
+
+jobs:
+  include:
+  - stage: 'Code analysis'
+    name: 'Lint code using yamllint'
+    script:
+    - composer app:lint-yaml
+
+  - stage: 'Code analysis'
+    name: 'Lint code using PHP-CS-Fixer'
+    script:
+    - composer app:lint-php-cs-fixer
+
+  - stage: 'Code analysis'
+    name: 'Analyze code using PHPStan'
+    script:
+    - bin/console cache:clear
+    - composer app:analyze-phpstan
+
+  - stage: 'Code analysis'
+    name: 'Analyze code using Psalm'
+    script:
+    - composer app:analyze-psalm
+
+  - stage: 'Tests'
+    name: 'Test app with PHPUnit'
+    script:
+    - composer app:test
