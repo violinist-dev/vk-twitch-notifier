@@ -42,8 +42,6 @@ class VkCallbackActionTest extends AbstractFunctionalTest
 
         $this->assertStatusCode(Response::HTTP_BAD_REQUEST);
 
-        echo $response->getContent();
-
         Assert::assertJsonStringEqualsJsonString(json_encode([
             'type' => 'validation_error',
             'status' => 400,
