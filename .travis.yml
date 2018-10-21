@@ -38,7 +38,7 @@ jobs:
     - phpenv config-rm xdebug.ini || return 0
 
     script:
-    - composer install --no-progress --no-suggest --no-interaction
+    - travis_retry composer install --no-progress --no-suggest --no-interaction
 
   - stage: 'Installing dependencies'
     name: 'pip'
@@ -47,12 +47,12 @@ jobs:
     - sudo apt-get -qq install -y python-pip
 
     # Install & setup virtualenv
-    - pip install --user --upgrade --quiet --disable-pip-version-check virtualenv
+    - travis_retry pip install --user --upgrade --quiet --disable-pip-version-check virtualenv
     - virtualenv venv
     - source venv/bin/activate
 
     script:
-    - pip install --quiet --disable-pip-version-check --requirement requirements.txt
+    - travis_retry pip install --quiet --disable-pip-version-check --requirement requirements.txt
 
   - stage: 'Code analysis'
     name: 'yamllint'
