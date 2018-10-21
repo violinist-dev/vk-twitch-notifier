@@ -22,6 +22,11 @@ abstract class AbstractFunctionalTest extends WebTestCase
     protected $vkCommunityId;
 
     /**
+     * @var string
+     */
+    protected $vkWebhookSecret;
+
+    /**
      * @var Client
      */
     private $client;
@@ -87,6 +92,7 @@ abstract class AbstractFunctionalTest extends WebTestCase
         // Parameters
         $this->vkCommunityId = (int) $container->getParameter('env.vk_community_id');
         $this->vkCallbackConfirmationToken = $container->getParameter('env.vk_callback_confirmation_token');
+        $this->vkWebhookSecret = $container->getParameter('env.vk_webhook_secret');
     }
 
     protected function tearDown(): void

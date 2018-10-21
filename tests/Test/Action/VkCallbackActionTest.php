@@ -10,9 +10,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class VkCallbackActionTest extends AbstractFunctionalTest
 {
+    public function testInvalidWebhookToken(): void
+    {
+        $response = $this->request('POST', '/vk-callback?' . http_build_query([
+            'webhookAccessToken' => 'invalid_webhook_token',
+        ]), [
+            'type' => 'confirmation',
+            'group_id' => $this->vkCommunityId,
+        ]);
+
+        $this->assertStatusCode(Response::HTTP_FORBIDDEN);
+    }
+
     public function testSuccessfulConfirmationCallback(): void
     {
-        $response = $this->request('POST', '/vk-callback', [
+        $response = $this->request('POST', '/vk-callback?' . http_build_query([
+            'webhookAccessToken' => $this->vkWebhookSecret,
+        ]), [
             'type' => 'confirmation',
             'group_id' => $this->vkCommunityId,
         ]);
@@ -24,7 +38,9 @@ class VkCallbackActionTest extends AbstractFunctionalTest
 
     public function testUnknownCallbackType(): void
     {
-        $response = $this->request('POST', '/vk-callback', [
+        $response = $this->request('POST', '/vk-callback?' . http_build_query([
+            'webhookAccessToken' => $this->vkWebhookSecret,
+        ]), [
             'type' => 'unknown_type',
         ]);
 
@@ -35,7 +51,9 @@ class VkCallbackActionTest extends AbstractFunctionalTest
 
     public function testUnsuccessfulConfirmationCallback(): void
     {
-        $response = $this->request('POST', '/vk-callback', [
+        $response = $this->request('POST', '/vk-callback?' . http_build_query([
+            'webhookAccessToken' => $this->vkWebhookSecret,
+        ]), [
             'type' => 'confirmation',
             'group_id' => 1,
         ]);

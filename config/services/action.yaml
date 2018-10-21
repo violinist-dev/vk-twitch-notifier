@@ -11,6 +11,8 @@ services:
 
   App\Action\VkCallbackAction:
     arguments:
+    - '@request_stack'
     - '@App\DeserializationHandler'
     - '@App\VkCallbackRequestTypeDetector'
     - '%env.vk_callback_confirmation_token%'
+    - '%env.vk_webhook_secret%'

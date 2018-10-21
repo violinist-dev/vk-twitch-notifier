@@ -9,6 +9,8 @@ use App\Enum\VkCallbackRequestType;
 use App\ValueObject\CallbackConfirmation;
 use App\VkCallbackRequestTypeDetector;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,6 +22,11 @@ class VkCallbackAction
     private $deserializationHandler;
 
     /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
      * @var string
      */
     private $vkCallbackConfirmationToken;
@@ -29,14 +36,23 @@ class VkCallbackAction
      */
     private $vkCallbackRequestTypeDetector;
 
+    /**
+     * @var string
+     */
+    private $vkWebhookSecret;
+
     public function __construct(
+        RequestStack $requestStack,
         DeserializationHandler $deserializationHandler,
         VkCallbackRequestTypeDetector $vkCallbackRequestTypeDetector,
-        string $vkCallbackConfirmationToken
+        string $vkCallbackConfirmationToken,
+        string $vkWebhookSecret
     ) {
+        $this->requestStack = $requestStack;
         $this->deserializationHandler = $deserializationHandler;
         $this->vkCallbackRequestTypeDetector = $vkCallbackRequestTypeDetector;
         $this->vkCallbackConfirmationToken = $vkCallbackConfirmationToken;
+        $this->vkWebhookSecret = $vkWebhookSecret;
     }
 
     private function handleConfirmationCallback(): Response
@@ -57,11 +73,26 @@ class VkCallbackAction
         );
     }
 
+    private function isWebhookAccessTokenValid(Request $request): bool
+    {
+        return $request->get('webhookAccessToken') !== $this->vkWebhookSecret;
+    }
+
     /**
      * @Route("/vk-callback", name="vk_callback", methods={"POST"})
      */
     public function __invoke(): Response
     {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
+        if ($this->isWebhookAccessTokenValid($request)) {
+            return new Response(
+                'Webhook access token is incorrect.',
+                Response::HTTP_FORBIDDEN
+            );
+        }
+
         $callbackType = $this->vkCallbackRequestTypeDetector->getCallbackType();
 
         if ($callbackType === null) {
