@@ -96,11 +96,11 @@ jobs:
   - stage: 'Tests'
     name: 'PHPUnit'
     before_script:
-    # Disable Xdebug
-    - phpenv config-rm xdebug.ini || return 0
-
     # Recreate database
     - composer app:recreate-db
 
     script:
     - composer app:test
+
+    after_success:
+    - travis_retry php vendor/bin/php-coveralls

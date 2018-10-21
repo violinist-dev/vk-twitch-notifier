@@ -22,6 +22,7 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^5.0",
         "friendsofphp/php-cs-fixer": "^2.13",
+        "php-coveralls/php-coveralls": "^2.1",
         "phpstan/phpstan": "^0.10.3",
         "phpstan/phpstan-symfony": "^0.10.1",
         "phpunit/phpunit": "^7.4",
