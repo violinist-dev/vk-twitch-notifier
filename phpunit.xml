@@ -21,8 +21,6 @@
 
     <filter>
         <whitelist>
-            <directory>./bin/</directory>
-            <directory>./public/</directory>
             <directory>./src/</directory>
         </whitelist>
     </filter>
