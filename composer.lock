@@ -1222,16 +1222,16 @@
         },
         {
             "name": "myclabs/php-enum",
-            "version": "1.6.3",
+            "version": "1.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/php-enum.git",
-                "reference": "a8284c7c540caf9988e339a404cadcdf1e8b165d"
+                "reference": "550d2334d77f91b0816a5cbd6965272fe20146b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/a8284c7c540caf9988e339a404cadcdf1e8b165d",
-                "reference": "a8284c7c540caf9988e339a404cadcdf1e8b165d",
+                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/550d2334d77f91b0816a5cbd6965272fe20146b8",
+                "reference": "550d2334d77f91b0816a5cbd6965272fe20146b8",
                 "shasum": ""
             },
             "require": {
@@ -1262,7 +1262,7 @@
             "keywords": [
                 "enum"
             ],
-            "time": "2018-10-27T21:15:22+00:00"
+            "time": "2018-10-30T14:36:18+00:00"
         },
         {
             "name": "ocramius/package-versions",
