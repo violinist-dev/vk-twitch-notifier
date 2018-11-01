@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: false
+    autoconfigure: false
+    public: false
+
+  App\StreamDetector\TwitchStreamDetector:
+    arguments:
+    - '@GuzzleHttp\ClientInterface'
+    - '%env.twitch_application_client_id%'
+
+  GuzzleHttp\Client: ~

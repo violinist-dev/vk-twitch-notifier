@@ -7,3 +7,4 @@ parameters:
   env.vk_api_access_token: '%env(VK_API_ACCESS_TOKEN)%'
   env.vk_webhook_secret: '%env(VK_WEBHOOK_SECRET)%'
   env.twitch_username: '%env(TWITCH_USERNAME)%'
+  env.twitch_application_client_id: '%env(TWITCH_APPLICATION_CLIENT_ID)%'
