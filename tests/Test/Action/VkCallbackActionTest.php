@@ -16,7 +16,7 @@ class VkCallbackActionTest extends AbstractFunctionalTest
             'webhookAccessToken' => 'invalid_webhook_token',
         ]), [
             'type' => 'confirmation',
-            'group_id' => $this->vkCommunityId,
+            'group_id' => $this->vkMessageSenderCommunityId,
         ]);
 
         $this->assertStatusCode(Response::HTTP_FORBIDDEN);
@@ -28,12 +28,12 @@ class VkCallbackActionTest extends AbstractFunctionalTest
             'webhookAccessToken' => $this->vkWebhookSecret,
         ]), [
             'type' => 'confirmation',
-            'group_id' => $this->vkCommunityId,
+            'group_id' => $this->vkMessageSenderCommunityId,
         ]);
 
         $this->assertStatusCode(Response::HTTP_OK);
 
-        Assert::assertEquals($this->vkCallbackConfirmationToken, $response->getContent());
+        Assert::assertEquals($this->vkCallbackToken, $response->getContent());
     }
 
     public function testUnknownCallbackType(): void
@@ -55,7 +55,7 @@ class VkCallbackActionTest extends AbstractFunctionalTest
             'webhookAccessToken' => $this->vkWebhookSecret,
         ]), [
             'type' => 'confirmation',
-            'group_id' => 1,
+            'group_id' => 734534645,
         ]);
 
         $this->assertStatusCode(Response::HTTP_BAD_REQUEST);

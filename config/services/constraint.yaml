@@ -9,6 +9,6 @@ services:
   App\Constraint\:
     resource: '%kernel.project_dir%/src/Constraint/'
 
-  App\Constraint\WorkingVkCommunityValidator:
+  App\Constraint\ValidVkCommunitySenderIdValidator:
     arguments:
-    - '%env.vk_community_id%'
+    - '%env.vk_message_sender_community_id%'

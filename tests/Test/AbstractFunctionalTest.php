@@ -14,12 +14,12 @@ abstract class AbstractFunctionalTest extends WebTestCase
     /**
      * @var string
      */
-    protected $vkCallbackConfirmationToken;
+    protected $vkCallbackToken;
 
     /**
      * @var int
      */
-    protected $vkCommunityId;
+    protected $vkMessageSenderCommunityId;
 
     /**
      * @var string
@@ -90,8 +90,8 @@ abstract class AbstractFunctionalTest extends WebTestCase
         $container = self::$container->get('test.service_container');
 
         // Parameters
-        $this->vkCommunityId = (int) $container->getParameter('env.vk_community_id');
-        $this->vkCallbackConfirmationToken = $container->getParameter('env.vk_callback_confirmation_token');
+        $this->vkMessageSenderCommunityId = (int) $container->getParameter('env.vk_message_sender_community_id');
+        $this->vkCallbackToken = $container->getParameter('env.vk_callback_token');
         $this->vkWebhookSecret = $container->getParameter('env.vk_webhook_secret');
     }
 

@@ -7,22 +7,22 @@ namespace App\Constraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class WorkingVkCommunityValidator extends ConstraintValidator
+class ValidVkCommunitySenderIdValidator extends ConstraintValidator
 {
     /**
      * @var int
      */
-    private $vkCommunityId;
+    private $vkMessageSenderCommunityId;
 
     public function __construct(
-        int $vkCommunityId
+        string $vkMessageSenderCommunityId
     ) {
-        $this->vkCommunityId = $vkCommunityId;
+        $this->vkMessageSenderCommunityId = (int) $vkMessageSenderCommunityId;
     }
 
     /**
-     * @param mixed              $value
-     * @param WorkingVkCommunity $constraint
+     * @param mixed                    $value
+     * @param ValidVkCommunitySenderId $constraint
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -30,7 +30,7 @@ class WorkingVkCommunityValidator extends ConstraintValidator
             return;
         }
 
-        if ($value !== $this->vkCommunityId) {
+        if ($value !== $this->vkMessageSenderCommunityId) {
             $this->context->addViolation($constraint->message);
 
             return;

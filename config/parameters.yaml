@@ -2,9 +2,9 @@ parameters:
   locale: 'en'
 
   # map environment variables to parameters
-  env.vk_community_id: '%env(VK_COMMUNITY_ID)%'
-  env.vk_callback_confirmation_token: '%env(VK_CALLBACK_CONFIRMATION_TOKEN)%'
-  env.vk_api_access_token: '%env(VK_API_ACCESS_TOKEN)%'
+  env.vk_message_sender_community_id: '%env(VK_MESSAGE_SENDER_COMMUNITY_ID)%'
+  env.vk_message_sender_access_token: '%env(VK_MESSAGE_SENDER_ACCESS_TOKEN)%'
   env.vk_webhook_secret: '%env(VK_WEBHOOK_SECRET)%'
-  env.twitch_username: '%env(TWITCH_USERNAME)%'
+  env.vk_callback_token: '%env(VK_CALLBACK_TOKEN)%'
+  env.twitch_watch_usernames: '%env(TWITCH_WATCH_USERNAMES)%'
   env.twitch_application_client_id: '%env(TWITCH_APPLICATION_CLIENT_ID)%'

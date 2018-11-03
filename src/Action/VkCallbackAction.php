@@ -27,14 +27,14 @@ class VkCallbackAction
     private $requestStack;
 
     /**
-     * @var string
-     */
-    private $vkCallbackConfirmationToken;
-
-    /**
      * @var VkCallbackRequestTypeDetector
      */
     private $vkCallbackRequestTypeDetector;
+
+    /**
+     * @var string
+     */
+    private $vkCallbackToken;
 
     /**
      * @var string
@@ -45,13 +45,13 @@ class VkCallbackAction
         RequestStack $requestStack,
         DeserializationHandler $deserializationHandler,
         VkCallbackRequestTypeDetector $vkCallbackRequestTypeDetector,
-        string $vkCallbackConfirmationToken,
+        string $vkCallbackToken,
         string $vkWebhookSecret
     ) {
         $this->requestStack = $requestStack;
         $this->deserializationHandler = $deserializationHandler;
         $this->vkCallbackRequestTypeDetector = $vkCallbackRequestTypeDetector;
-        $this->vkCallbackConfirmationToken = $vkCallbackConfirmationToken;
+        $this->vkCallbackToken = $vkCallbackToken;
         $this->vkWebhookSecret = $vkWebhookSecret;
     }
 
@@ -60,15 +60,7 @@ class VkCallbackAction
         $this->deserializationHandler->handle(CallbackConfirmation::class);
 
         return new Response(
-            $this->vkCallbackConfirmationToken,
-            Response::HTTP_OK
-        );
-    }
-
-    private function handleMessageNewCallback(): Response
-    {
-        return new Response(
-            'ok',
+            $this->vkCallbackToken,
             Response::HTTP_OK
         );
     }
@@ -101,8 +93,6 @@ class VkCallbackAction
 
         if ($callbackType->equals(new VkCallbackRequestType(VkCallbackRequestType::CONFIRMATION))) {
             return $this->handleConfirmationCallback();
-        } elseif ($callbackType->equals(new VkCallbackRequestType(VkCallbackRequestType::MESSAGE_NEW))) {
-            return $this->handleMessageNewCallback();
         }
 
         throw new RuntimeException('Unhandled callback type: ' . $callbackType->getValue());

@@ -9,13 +9,18 @@ cache:
 
 env:
   global:
-  - APP_TIMEZONE=UTC
+  # Community ID & its access token which will send messages to subscribed users
+  - VK_MESSAGE_SENDER_COMMUNITY_ID=1
+  - VK_MESSAGE_SENDER_ACCESS_TOKEN=cbafc32e071edced419509a79d35259961aa3eaf3b4a28710eb48270c2769d0588490f135e79bde80ffe2
 
-  - VK_COMMUNITY_ID=123
-  - VK_CALLBACK_CONFIRMATION_TOKEN=17d23e42
-  - VK_API_ACCESS_TOKEN=cbafc32e071edced419509a79d35259961aa3eaf3b4a28710eb48270c2769d0588490f135e79bde80ffe2
-  - VK_WEBHOOK_SECRET=de832e65f0d5698e794463201eedefdb
-  - TWITCH_USERNAME=tijoe
+  # Any string (e.g. random MD5) which will be used as secret key needed to access VK webhook URL
+  - VK_WEBHOOK_SECRET=7234132fd6b21760b0afccc0ecce9ebf
+
+  # Token that should be used to verify callback URL
+  - VK_CALLBACK_TOKEN=a83606c0
+
+  # Twitch channels to watch (comma-separated) & API credentials
+  - TWITCH_WATCH_USERNAMES=tijoe
   - TWITCH_APPLICATION_CLIENT_ID=U7ymWuxgQiaYoniFZHzAgcVUUDvtzs
 
   - APP_ENV=test

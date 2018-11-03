@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-use App\Constraint\WorkingVkCommunity;
+use App\Constraint\ValidVkCommunitySenderId;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CallbackConfirmationRequest
 {
     /**
      * @Assert\Type("int")
-     * @WorkingVkCommunity()
+     * @ValidVkCommunitySenderId()
      *
      * @var int
      */

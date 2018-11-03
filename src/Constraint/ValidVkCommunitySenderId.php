@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
-class WorkingVkCommunity extends Constraint
+class ValidVkCommunitySenderId extends Constraint
 {
     /**
      * @var string
