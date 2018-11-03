@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\StreamDetector;
 
 use App\ValueObject\ChannelIdentifierInterface;
+use App\ValueObject\TwitchUsername;
+use App\ValueObject\Url;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,7 +30,10 @@ class TwitchStreamDetector implements StreamDetectorInterface
         $this->client = $client;
     }
 
-    public function isStreamActive(ChannelIdentifierInterface $channelIdentifier): bool
+    /**
+     * @param TwitchUsername $channelIdentifier
+     */
+    public function getActiveStream(ChannelIdentifierInterface $channelIdentifier): ?Url
     {
         $response = $this->client->request(Request::METHOD_GET, 'https://api.twitch.tv/helix/streams', [
             'headers' => [
@@ -52,6 +57,10 @@ class TwitchStreamDetector implements StreamDetectorInterface
             throw new StreamingServiceCheckFailureException();
         }
 
-        return isset($decodedBody['data'][0]['viewer_count']);
+        if (isset($decodedBody['data'][0]['viewer_count']) === false) {
+            return null;
+        }
+
+        return new Url('https://twitch.tv/' . $channelIdentifier->getRawValue());
     }
 }

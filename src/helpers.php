@@ -19,3 +19,23 @@ function traversableToArray(Traversable $traversableObject): array
 
     return $array;
 }
+
+/**
+ * Explodes string, but it string is empty returns empty array.
+ *
+ * @return string[]
+ */
+function explodeNonEmpty(string $delimiter, string $string): array
+{
+    if ($string === '') {
+        return [];
+    }
+
+    $explodedValue = explode($delimiter, $string);
+
+    if ($explodedValue === false) {
+        return [];
+    }
+
+    return $explodedValue;
+}
