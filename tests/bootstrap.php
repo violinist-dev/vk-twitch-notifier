@@ -14,4 +14,4 @@ if (!isset($_SERVER['APP_ENV'])) {
     (new Dotenv())->load(__DIR__ . '/../.env');
 }
 
-date_default_timezone_set($_SERVER['APP_TIMEZONE']);
+date_default_timezone_set('UTC');
