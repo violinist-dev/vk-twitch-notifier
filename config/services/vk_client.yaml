@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: false
+    public: false
+
+  App\VkClient\:
+    resource: '%kernel.project_dir%/src/VkClient/'
+
+  App\VkClient\VkClient:
+    arguments:
+    - '@GuzzleHttp\ClientInterface'
+    - '%env.vk_access_token%'
+    - '%vk.api_version%'

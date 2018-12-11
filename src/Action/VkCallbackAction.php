@@ -65,6 +65,14 @@ class VkCallbackAction
         );
     }
 
+    private function handleMessageNewCallback(): Response
+    {
+        return new Response(
+            'ok',
+            Response::HTTP_OK
+        );
+    }
+
     private function isWebhookAccessTokenValid(Request $request): bool
     {
         return $request->get('webhookAccessToken') !== $this->vkWebhookSecret;
@@ -93,6 +101,8 @@ class VkCallbackAction
 
         if ($callbackType->equals(new VkCallbackRequestType(VkCallbackRequestType::CONFIRMATION))) {
             return $this->handleConfirmationCallback();
+        } elseif ($callbackType->equals(new VkCallbackRequestType(VkCallbackRequestType::MESSAGE_NEW))) {
+            return $this->handleMessageNewCallback();
         }
 
         throw new RuntimeException('Unhandled callback type: ' . $callbackType->getValue());

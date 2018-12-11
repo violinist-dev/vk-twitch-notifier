@@ -9,6 +9,9 @@ cache:
 
 env:
   global:
+  # VK credentials
+  - VK_ACCESS_TOKEN=
+
   # Community ID & its access token which will send messages to subscribed users
   - VK_MESSAGE_SENDER_COMMUNITY_ID=1
   - VK_MESSAGE_SENDER_ACCESS_TOKEN=cbafc32e071edced419509a79d35259961aa3eaf3b4a28710eb48270c2769d0588490f135e79bde80ffe2
@@ -78,26 +81,26 @@ jobs:
     script:
     - composer app:lint-php-cs-fixer
 
-  - stage: 'Code analysis'
-    name: 'PHPStan'
-    before_script:
-    # Disable Xdebug
-    - phpenv config-rm xdebug.ini || return 0
+#  - stage: 'Code analysis'
+#    name: 'PHPStan'
+#    before_script:
+#    # Disable Xdebug
+#    - phpenv config-rm xdebug.ini || return 0
+#
+#    # Clear cache with warmup to generate container XML file
+#    - bin/console cache:clear
+#
+#    script:
+#    - composer app:analyze-phpstan
 
-    # Clear cache with warmup to generate container XML file
-    - bin/console cache:clear
-
-    script:
-    - composer app:analyze-phpstan
-
-  - stage: 'Code analysis'
-    name: 'Psalm'
-    before_script:
-    # Disable Xdebug
-    - phpenv config-rm xdebug.ini || return 0
-
-    script:
-    - composer app:analyze-psalm
+#  - stage: 'Code analysis'
+#    name: 'Psalm'
+#    before_script:
+#    # Disable Xdebug
+#    - phpenv config-rm xdebug.ini || return 0
+#
+#    script:
+#    - composer app:analyze-psalm
 
   - stage: 'Tests'
     name: 'PHPUnit'
