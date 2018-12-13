@@ -32,7 +32,7 @@ class ReplyToUnknownMessage
 
         $this->messageBus->dispatch(
             new VkMessage(
-                "Неопознанная команда.\n\nБот понимает только следующие команды:\n•подписаться\n•отписаться",
+                'Неопознанная команда. Чтобы получить список команд, отправьте боту слово «команды».',
                 [
                     $userMessage->getSender(),
                 ]

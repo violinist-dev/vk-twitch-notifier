@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\ValueObject\UserMessage\HelpMessage;
 use App\ValueObject\UserMessage\SubscriptionMessage;
 use App\ValueObject\UserMessage\UnknownMessage;
 use App\ValueObject\UserMessage\UnsubscriptionMessage;
@@ -20,6 +21,10 @@ class UserMessageTypeDetector
 
         if (UnsubscriptionMessage::isTextMatchesMessageType($text) === true) {
             return new UnsubscriptionMessage($sender);
+        }
+
+        if (HelpMessage::isTextMatchesMessageType($text) === true) {
+            return new HelpMessage($sender);
         }
 
         return new UnknownMessage($sender);
