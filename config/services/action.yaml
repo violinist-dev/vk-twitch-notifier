@@ -12,7 +12,9 @@ services:
   App\Action\VkCallbackAction:
     arguments:
     - '@request_stack'
+    - '@message_bus'
     - '@App\DeserializationHandler'
-    - '@App\VkCallbackRequestTypeDetector'
+    - '@App\VkCallbackParser'
+    - '@App\UserMessageTypeDetector'
     - '%env.vk_callback_token%'
     - '%env.vk_webhook_secret%'

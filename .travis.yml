@@ -9,9 +9,6 @@ cache:
 
 env:
   global:
-  # VK credentials
-  - VK_ACCESS_TOKEN=
-
   # Community ID & its access token which will send messages to subscribed users
   - VK_MESSAGE_SENDER_COMMUNITY_ID=1
   - VK_MESSAGE_SENDER_ACCESS_TOKEN=cbafc32e071edced419509a79d35259961aa3eaf3b4a28710eb48270c2769d0588490f135e79bde80ffe2
@@ -47,7 +44,7 @@ jobs:
     - phpenv config-rm xdebug.ini || return 0
 
     script:
-    - travis_retry composer install --no-progress --no-suggest --no-interaction
+    - travis_retry composer install --no-progress --no-suggest --no-interaction --optimize-autoloader
 
   - stage: 'Installing dependencies'
     name: 'pip'

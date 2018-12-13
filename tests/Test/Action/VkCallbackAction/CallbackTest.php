@@ -2,26 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Test\Action;
+namespace App\Tests\Test\Action\VkCallbackAction;
 
 use App\Tests\Test\AbstractFunctionalTest;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\HttpFoundation\Response;
 
-class VkCallbackActionTest extends AbstractFunctionalTest
+class CallbackTest extends AbstractFunctionalTest
 {
-    public function testInvalidWebhookToken(): void
-    {
-        $response = $this->request('POST', '/vk-callback?' . http_build_query([
-            'webhookAccessToken' => 'invalid_webhook_token',
-        ]), [
-            'type' => 'confirmation',
-            'group_id' => $this->vkMessageSenderCommunityId,
-        ]);
-
-        $this->assertStatusCode(Response::HTTP_FORBIDDEN);
-    }
-
     public function testSuccessfulConfirmationCallback(): void
     {
         $response = $this->request('POST', '/vk-callback?' . http_build_query([
@@ -34,19 +22,6 @@ class VkCallbackActionTest extends AbstractFunctionalTest
         $this->assertStatusCode(Response::HTTP_OK);
 
         Assert::assertEquals($this->vkCallbackToken, $response->getContent());
-    }
-
-    public function testUnknownCallbackType(): void
-    {
-        $response = $this->request('POST', '/vk-callback?' . http_build_query([
-            'webhookAccessToken' => $this->vkWebhookSecret,
-        ]), [
-            'type' => 'unknown_type',
-        ]);
-
-        $this->assertStatusCode(Response::HTTP_BAD_REQUEST);
-
-        Assert::assertEquals('unsupported callback type', $response->getContent());
     }
 
     public function testUnsuccessfulConfirmationCallback(): void

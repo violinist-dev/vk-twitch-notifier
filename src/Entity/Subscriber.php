@@ -6,7 +6,9 @@ namespace App\Entity;
 
 use App\Repository\SubscriberRepository;
 use App\ValueObject\VkUser;
+use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+
 use Ramsey\Uuid\UuidInterface;
 
 /**

@@ -5,4 +5,5 @@ services:
     public: false
 
   App\DeserializationHandler: ~
-  App\VkCallbackRequestTypeDetector: ~
+  App\VkCallbackParser: ~
+  App\UserMessageTypeDetector: ~

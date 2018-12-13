@@ -2,8 +2,7 @@ parameters:
   locale: 'en'
 
   # map environment variables to parameters
-  env.vk_access_token: '%env(VK_ACCESS_TOKEN)%'
-  env.vk_message_sender_community_id: '%env(VK_MESSAGE_SENDER_COMMUNITY_ID)%'
+  env.vk_message_sender_community_id: '%env(int:VK_MESSAGE_SENDER_COMMUNITY_ID)%'
   env.vk_message_sender_access_token: '%env(VK_MESSAGE_SENDER_ACCESS_TOKEN)%'
   env.vk_webhook_secret: '%env(VK_WEBHOOK_SECRET)%'
   env.vk_callback_token: '%env(VK_CALLBACK_TOKEN)%'

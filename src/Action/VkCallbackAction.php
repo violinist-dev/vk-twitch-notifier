@@ -6,12 +6,16 @@ namespace App\Action;
 
 use App\DeserializationHandler;
 use App\Enum\VkCallbackRequestType;
+use App\Message\ReplyToMessage;
+use App\UserMessageTypeDetector;
 use App\ValueObject\CallbackConfirmation;
-use App\VkCallbackRequestTypeDetector;
+use App\ValueObject\IncomingVkMessage;
+use App\VkCallbackParser;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class VkCallbackAction
@@ -22,14 +26,24 @@ class VkCallbackAction
     private $deserializationHandler;
 
     /**
+     * @var MessageBusInterface
+     */
+    private $messageBus;
+
+    /**
      * @var RequestStack
      */
     private $requestStack;
 
     /**
-     * @var VkCallbackRequestTypeDetector
+     * @var UserMessageTypeDetector
      */
-    private $vkCallbackRequestTypeDetector;
+    private $userMessageTypeDetector;
+
+    /**
+     * @var VkCallbackParser
+     */
+    private $vkCallbackParser;
 
     /**
      * @var string
@@ -43,14 +57,18 @@ class VkCallbackAction
 
     public function __construct(
         RequestStack $requestStack,
+        MessageBusInterface $messageBus,
         DeserializationHandler $deserializationHandler,
-        VkCallbackRequestTypeDetector $vkCallbackRequestTypeDetector,
+        VkCallbackParser $vkCallbackParser,
+        UserMessageTypeDetector $userMessageTypeDetector,
         string $vkCallbackToken,
         string $vkWebhookSecret
     ) {
         $this->requestStack = $requestStack;
+        $this->messageBus = $messageBus;
         $this->deserializationHandler = $deserializationHandler;
-        $this->vkCallbackRequestTypeDetector = $vkCallbackRequestTypeDetector;
+        $this->vkCallbackParser = $vkCallbackParser;
+        $this->userMessageTypeDetector = $userMessageTypeDetector;
         $this->vkCallbackToken = $vkCallbackToken;
         $this->vkWebhookSecret = $vkWebhookSecret;
     }
@@ -67,6 +85,12 @@ class VkCallbackAction
 
     private function handleMessageNewCallback(): Response
     {
+        /** @var IncomingVkMessage $incomingMessage */
+        $incomingMessage = $this->deserializationHandler->handle(IncomingVkMessage::class);
+        $messageType = $this->userMessageTypeDetector->detectType($incomingMessage);
+
+        $this->messageBus->dispatch(new ReplyToMessage($messageType));
+
         return new Response(
             'ok',
             Response::HTTP_OK
@@ -93,7 +117,7 @@ class VkCallbackAction
             );
         }
 
-        $callbackType = $this->vkCallbackRequestTypeDetector->getCallbackType();
+        $callbackType = $this->vkCallbackParser->getCallbackType();
 
         if ($callbackType === null) {
             return new Response('unsupported callback type', Response::HTTP_BAD_REQUEST);

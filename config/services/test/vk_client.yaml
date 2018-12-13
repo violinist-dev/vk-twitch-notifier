@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: false
+    public: false
+
+  App\VkClient\VkMessageSenderInterface:
+    alias: 'App\Tests\Mock\VkClient\VkMessageSenderMock'
+
+  App\Tests\Mock\VkClient\VkMessageSenderMock: ~

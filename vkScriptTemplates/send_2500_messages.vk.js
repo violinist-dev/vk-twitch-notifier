@@ -1,9 +1,9 @@
-var rawRecipients = Args.recipients;
+var recipients = Args.recipients;
 var message = Args.message;
 var nextMessageIdentifier = parseInt(Args.nextMessageIdentifier);
+var sentMessagePacks = [];
 
-var recipients = rawRecipients.split(",");
-var sentMessages = [];
+recipients = recipients.split(",");
 
 var i = 0;
 
@@ -43,9 +43,11 @@ while (i < recipients.length) {
         sentMessageIndex = sentMessageIndex + 1;
     }
 
+    sentMessagePacks.push(sentMessagePack);
+
     i = i + 100;
 }
 
 return {
-    "sentMessages": sentMessages
+    "sentMessages": sentMessagePacks
 };

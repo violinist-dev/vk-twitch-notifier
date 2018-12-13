@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use App\Repository\SentMessageRepository;
 use App\ValueObject\VkUser;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,7 +22,7 @@ class SentMessage
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=App\SMALL_INT)
      *
      * @var string
      */

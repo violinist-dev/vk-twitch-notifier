@@ -90,7 +90,7 @@ abstract class AbstractFunctionalTest extends WebTestCase
         $container = self::$container->get('test.service_container');
 
         // Parameters
-        $this->vkMessageSenderCommunityId = (int) $container->getParameter('env.vk_message_sender_community_id');
+        $this->vkMessageSenderCommunityId = $container->getParameter('env.vk_message_sender_community_id');
         $this->vkCallbackToken = $container->getParameter('env.vk_callback_token');
         $this->vkWebhookSecret = $container->getParameter('env.vk_webhook_secret');
     }

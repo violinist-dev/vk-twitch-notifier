@@ -27,7 +27,7 @@ class VkNotifier
     public function __construct(
         ClientInterface $client,
         string $vkMessageSenderAccessToken,
-        string $vkMessageSenderCommunityId
+        int $vkMessageSenderCommunityId
     ) {
         $this->client = $client;
         $this->vkMessageSenderAccessToken = $vkMessageSenderAccessToken;

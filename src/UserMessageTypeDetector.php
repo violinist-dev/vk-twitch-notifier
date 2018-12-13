@@ -4,29 +4,29 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\ValueObject\IncomingVkMessage;
 use App\ValueObject\UserMessage\HelpMessage;
 use App\ValueObject\UserMessage\SubscriptionMessage;
 use App\ValueObject\UserMessage\UnknownMessage;
 use App\ValueObject\UserMessage\UnsubscriptionMessage;
 use App\ValueObject\UserMessage\UserMessageInterface;
-use App\ValueObject\VkUser;
 
 class UserMessageTypeDetector
 {
-    public function detectType(string $text, VkUser $sender): UserMessageInterface
+    public function detectType(IncomingVkMessage $incomingMessage): UserMessageInterface
     {
-        if (SubscriptionMessage::isTextMatchesMessageType($text) === true) {
-            return new SubscriptionMessage($sender);
+        if (SubscriptionMessage::isTextMatchesMessageType($incomingMessage->getMessage()) === true) {
+            return new SubscriptionMessage($incomingMessage->getSender());
         }
 
-        if (UnsubscriptionMessage::isTextMatchesMessageType($text) === true) {
-            return new UnsubscriptionMessage($sender);
+        if (UnsubscriptionMessage::isTextMatchesMessageType($incomingMessage->getMessage()) === true) {
+            return new UnsubscriptionMessage($incomingMessage->getSender());
         }
 
-        if (HelpMessage::isTextMatchesMessageType($text) === true) {
-            return new HelpMessage($sender);
+        if (HelpMessage::isTextMatchesMessageType($incomingMessage->getMessage()) === true) {
+            return new HelpMessage($incomingMessage->getSender());
         }
 
-        return new UnknownMessage($sender);
+        return new UnknownMessage($incomingMessage->getSender());
     }
 }

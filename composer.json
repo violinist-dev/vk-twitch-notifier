@@ -31,6 +31,7 @@
         "phpunit/phpunit": "^7.4",
         "symfony/browser-kit": "*",
         "symfony/dotenv": "*",
+        "symfony/web-server-bundle": "4.1.*",
         "vimeo/psalm": "^2.0"
     },
     "config": {
@@ -49,6 +50,7 @@
             "App\\Tests\\": "tests/"
         },
         "files": [
+            "src/constants.php",
             "src/helpers.php"
         ]
     },

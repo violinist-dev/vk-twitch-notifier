@@ -4,13 +4,13 @@ services:
     autoconfigure: false
     public: false
 
-  App\VkClient\:
-    resource: '%kernel.project_dir%/src/VkClient/'
+  App\VkClient\VkMessageSenderInterface:
+    alias: 'App\VkClient\VkClient'
 
   App\VkClient\VkClient:
     arguments:
     - '@GuzzleHttp\ClientInterface'
     - '@App\Repository\SentMessageRepository'
-    - '%env.vk_access_token%'
+    - '%env.vk_message_sender_access_token%'
     - '%vk.api_version%'
     - '%vk_scripts_dir%'

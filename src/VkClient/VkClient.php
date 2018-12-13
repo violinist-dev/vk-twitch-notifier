@@ -64,18 +64,18 @@ class VkClient implements VkMessageSenderInterface
             'POST',
             'https://api.vk.com/method/execute',
             [
-                'json' => [
-                    'accessToken' => $this->vkAccessToken,
+                'form_params' => [
+                    'access_token' => $this->vkAccessToken,
                     'v' => $this->vkApiVersion,
                     'code' => file_get_contents($this->vkScriptsDir . '/send_2500_messages.vk.js'),
                     'message' => $message,
-                    'rawRecipients' => implode(',', $rawRecipients),
+                    'recipients' => implode(',', $rawRecipients),
                     'nextMessageIdentifier' => $this->sentMessageRepository->getNextMessageIdentifier(),
                 ],
             ]
         );
 
-        $jsonResponse = json_decode($response->getBody(), true);
+        $jsonResponse = json_decode($response->getBody()->getContents(), true);
 
         return array_map(function (array $sentMessagePack): SentPersonalMessagePack {
             $messages = array_map(function (array $sentMessage): SentPersonalMessage {
@@ -90,6 +90,6 @@ class VkClient implements VkMessageSenderInterface
                 $sentMessagePack['uniqueIdentifier'],
                 $messages
             );
-        }, $jsonResponse['sentMessages']);
+        }, $jsonResponse['response']['sentMessages']);
     }
 }

@@ -15,9 +15,9 @@ class ValidVkCommunitySenderIdValidator extends ConstraintValidator
     private $vkMessageSenderCommunityId;
 
     public function __construct(
-        string $vkMessageSenderCommunityId
+        int $vkMessageSenderCommunityId
     ) {
-        $this->vkMessageSenderCommunityId = (int) $vkMessageSenderCommunityId;
+        $this->vkMessageSenderCommunityId = $vkMessageSenderCommunityId;
     }
 
     /**

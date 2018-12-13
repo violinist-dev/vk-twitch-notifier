@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Dto;
 
 use App\Constraint\ValidVkCommunitySenderId;
+use App\Enum\VkCallbackRequestType;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CallbackConfirmationRequest
+class ConfirmationRequest
 {
     /**
      * @Assert\Type("int")
@@ -19,7 +20,7 @@ class CallbackConfirmationRequest
 
     /**
      * @Assert\Type("string")
-     * @Assert\EqualTo("confirmation")
+     * @Assert\EqualTo(VkCallbackRequestType::CONFIRMATION)
      *
      * @var string
      */
