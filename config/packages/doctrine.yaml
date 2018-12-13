@@ -8,6 +8,10 @@ doctrine:
     password: '%env(DATABASE_PASSWORD)%'
     charset: UTF8
     server_version: '11.0'
+    types:
+      uuid: Ramsey\Uuid\Doctrine\UuidType
+      vk_user: App\DoctrineType\VkUserType
+      vk_user_collection: App\DoctrineType\VkUserCollectionType
 
   orm:
     auto_generate_proxy_classes: '%kernel.debug%'

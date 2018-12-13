@@ -10,5 +10,7 @@ services:
   App\VkClient\VkClient:
     arguments:
     - '@GuzzleHttp\ClientInterface'
+    - '@App\Repository\SentMessageRepository'
     - '%env.vk_access_token%'
     - '%vk.api_version%'
+    - '%vk_scripts_dir%'

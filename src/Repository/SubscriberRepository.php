@@ -23,8 +23,16 @@ class SubscriberRepository extends ServiceEntityRepository
      */
     public function getSubscribersByIds(array $vkUsers): array
     {
-        return array_map(function (VkUser $vkUser) {
-            return new Subscriber($vkUser);
-        }, $vkUsers);
+        $qb = $this->createQueryBuilder('subscriber');
+
+        $qb->andWhere('subscriber.vk IN (:vkIds)');
+        $qb->setParameter('vkIds', array_map(function (VkUser $vkUser): int {
+            return $vkUser->getId();
+        }, $vkUsers));
+
+        /** @var Subscriber[] $subscribers */
+        $subscribers = $qb->getQuery()->execute();
+
+        return $subscribers;
     }
 }

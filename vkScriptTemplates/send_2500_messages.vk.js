@@ -1,26 +1,51 @@
 var rawRecipients = Args.recipients;
-var recipients = rawRecipients.split(',');
+var message = Args.message;
+var nextMessageIdentifier = parseInt(Args.nextMessageIdentifier);
 
-if (recipients.length > 2500) {
-    return {
-        error: 'too many recipients (' + recipients.length + ')'
-    };
-}
+var recipients = rawRecipients.split(",");
+var sentMessages = [];
 
 var i = 0;
-var unavailableRecipients = [];
 
-while (recipients[i]) {
-    var recipientsPack = [];
+while (i < recipients.length) {
+    var recipientsPack = recipients.slice(i, i + 100);
 
-    if ()
+    var joinedRecipientsPack = recipientsPack[0];
 
-    API.groups.approveRequest({
-        group_id: group_id,
-        user_id:  requests[i]
+    var recipientIndex = 1;
+
+    while (recipientsPack[recipientIndex]) {
+        joinedRecipientsPack + "," + recipientsPack[recipientIndex];
+    }
+
+    var result = API.messages.send({
+        "message": message,
+        "user_ids": recipientsPack,
+        "random_id": nextMessageIdentifier
     });
 
-    i = i + 1;
+    var sentMessagePack = {
+        "uniqueIdentifier": nextMessageIdentifier,
+        "messages": []
+    };
+
+    nextMessageIdentifier = nextMessageIdentifier + 1;
+
+    var sentMessageIndex = 0;
+
+    while (result[sentMessageIndex]) {
+        sentMessagePack.messages.push({
+            "userId": result[sentMessageIndex].peer_id,
+            "messageId": result[sentMessageIndex].message_id,
+            "errorMessage": result[sentMessageIndex].error
+        });
+
+        sentMessageIndex = sentMessageIndex + 1;
+    }
+
+    i = i + 100;
 }
 
-return i;
+return {
+    "sentMessages": sentMessages
+};

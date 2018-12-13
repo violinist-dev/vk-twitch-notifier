@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\VkClient;
 
+use App\ValueObject\SentPersonalMessagePack;
 use App\ValueObject\VkUser;
 
 interface VkMessageSenderInterface
@@ -11,7 +12,7 @@ interface VkMessageSenderInterface
     /**
      * @param VkUser $recipients
      *
-     * @return VkUser[]
+     * @return SentPersonalMessagePack[]
      */
     public function sendMessage(
         string $message,

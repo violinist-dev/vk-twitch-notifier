@@ -11,3 +11,5 @@ parameters:
   env.twitch_application_client_id: '%env(TWITCH_APPLICATION_CLIENT_ID)%'
 
   vk.api_version: '5.92'
+
+  vk_scripts_dir: '%kernel.project_dir%/vkScriptTemplates'
