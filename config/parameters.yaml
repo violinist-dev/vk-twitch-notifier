@@ -1,5 +1,5 @@
 parameters:
-  locale: 'en'
+  locale: '%env(APP_LOCALE)%'
 
   # map environment variables to parameters
   env.vk_message_sender_community_id: '%env(int:VK_MESSAGE_SENDER_COMMUNITY_ID)%'

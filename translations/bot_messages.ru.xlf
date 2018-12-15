@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="ru" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="successful_subscription_command_reply">
+                <source>successful_subscription_command_reply</source>
+                <target>
+                    Вы успешно подписались на уведомления. Вы будете получать уведомления о стримах на всех площадках, на которых зарегистрирован стример, в течение 5 минут со старта трансляции.
+
+                    Обратите внимание: если вы запретите боту присылать вам сообщения, то будете автоматически исключены из рассылки уведомлений.
+
+                    Если вдруг захотите отписаться, просто отправьте сообщение с текстом «отписаться».
+                </target>
+            </trans-unit>
+
+            <trans-unit id="successful_unsubscription_command_reply">
+                <source>successful_unsubscription_command_reply</source>
+                <target>
+                    Вы успешно от уведомлений. Если захотите подписаться по новой, просто отправьте сообщение с текстом «подписаться».
+                </target>
+            </trans-unit>
+
+            <trans-unit id="unknown_command_reply">
+                <source>unknown_command_reply</source>
+                <target>
+                    Неопознанная команда. Чтобы получить список команд, отправьте боту слово «команды».
+                </target>
+            </trans-unit>
+
+            <trans-unit id="help_command_reply">
+                <source>help_command_reply</source>
+                <target>
+                    Чтобы ответить боту, надо отправить сообщение со словом-командой. Бот понимает следующие команды:
+
+                    • подписаться
+                    • отписаться
+                    • команды
+
+                    Сообщения, которые вы отправляете боту, не читают живые люди. Если вам надо с кем-то связаться, то вам следует обратиться к кому-нибудь, кто указан в качестве контактного лица в официальной группе стримера.
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

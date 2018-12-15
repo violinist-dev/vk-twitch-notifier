@@ -8,6 +8,7 @@ use App\Message\ReplyToMessage;
 use App\Message\VkMessage;
 use App\ValueObject\UserMessage\SubscriptionMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ReplyToSubscriptionMessage
 {
@@ -16,10 +17,17 @@ class ReplyToSubscriptionMessage
      */
     private $messageBus;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
     public function __construct(
-        MessageBusInterface $messageBus
+        MessageBusInterface $messageBus,
+        TranslatorInterface $translator
     ) {
         $this->messageBus = $messageBus;
+        $this->translator = $translator;
     }
 
     public function __invoke(ReplyToMessage $message): void
@@ -30,13 +38,11 @@ class ReplyToSubscriptionMessage
             return;
         }
 
-        $this->messageBus->dispatch(
-            new VkMessage(
-                "Вы успешно подписались на уведомления. Вы будете получать уведомления о стримах на всех площадках, на которых зарегистрирован стример, в течение 5 минут со старта трансляции.\n\nОбратите внимание: если вы запретите боту присылать вам сообщения, то будете автоматически исключены из рассылки уведомлений.\n\nЕсли вдруг захотите отписаться, просто отправьте сообщение с текстом «отписаться».",
-                [
-                    $userMessage->getSender(),
-                ]
-            )
-        );
+        $this->messageBus->dispatch(new VkMessage(
+            $this->translator->trans('successful_subscription_command_reply', [], 'bot_messages'),
+            [
+                $userMessage->getSender(),
+            ]
+        ));
     }
 }

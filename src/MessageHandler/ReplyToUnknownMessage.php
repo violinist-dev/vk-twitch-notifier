@@ -8,6 +8,7 @@ use App\Message\ReplyToMessage;
 use App\Message\VkMessage;
 use App\ValueObject\UserMessage\UnknownMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ReplyToUnknownMessage
 {
@@ -16,10 +17,17 @@ class ReplyToUnknownMessage
      */
     private $messageBus;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
     public function __construct(
-        MessageBusInterface $messageBus
+        MessageBusInterface $messageBus,
+        TranslatorInterface $translator
     ) {
         $this->messageBus = $messageBus;
+        $this->translator = $translator;
     }
 
     public function __invoke(ReplyToMessage $message): void
@@ -30,13 +38,11 @@ class ReplyToUnknownMessage
             return;
         }
 
-        $this->messageBus->dispatch(
-            new VkMessage(
-                'Неопознанная команда. Чтобы получить список команд, отправьте боту слово «команды».',
-                [
-                    $userMessage->getSender(),
-                ]
-            )
-        );
+        $this->messageBus->dispatch(new VkMessage(
+            $this->translator->trans('unknown_command_reply', [], 'bot_messages'),
+            [
+                $userMessage->getSender(),
+            ]
+        ));
     }
 }

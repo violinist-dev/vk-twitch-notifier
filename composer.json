@@ -19,6 +19,7 @@
         "symfony/messenger": "4.1.*",
         "symfony/orm-pack": "^1.0",
         "symfony/serializer": "*",
+        "symfony/translation": "4.1.*",
         "symfony/validator": "*",
         "symfony/yaml": "*"
     },

@@ -8,6 +8,7 @@ use App\Message\ReplyToMessage;
 use App\Message\VkMessage;
 use App\ValueObject\UserMessage\HelpMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ReplyToHelpMessage
 {
@@ -16,10 +17,17 @@ class ReplyToHelpMessage
      */
     private $messageBus;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
     public function __construct(
-        MessageBusInterface $messageBus
+        MessageBusInterface $messageBus,
+        TranslatorInterface $translator
     ) {
         $this->messageBus = $messageBus;
+        $this->translator = $translator;
     }
 
     public function __invoke(ReplyToMessage $message): void
@@ -30,13 +38,11 @@ class ReplyToHelpMessage
             return;
         }
 
-        $this->messageBus->dispatch(
-            new VkMessage(
-                "Чтобы ответить боту, надо отправить сообщение со словом-командой. Бот понимает следующие команды:\n•подписаться\n•отписаться\n•команды\n\nСообщения, которые вы отправляете боту, не читают живые люди. Если вам надо с кем-то связаться, то вам следует обратиться к кому-нибудь, кто указан в качестве контактного лица в официальной группе стримера.",
-                [
-                    $userMessage->getSender(),
-                ]
-            )
-        );
+        $this->messageBus->dispatch(new VkMessage(
+            $this->translator->trans('help_command_reply', [], 'bot_messages'),
+            [
+                $userMessage->getSender(),
+            ]
+        ));
     }
 }

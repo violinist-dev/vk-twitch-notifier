@@ -8,6 +8,7 @@ use App\Message\ReplyToMessage;
 use App\Message\VkMessage;
 use App\ValueObject\UserMessage\UnsubscriptionMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ReplyToUnsubscriptionMessage
 {
@@ -16,10 +17,17 @@ class ReplyToUnsubscriptionMessage
      */
     private $messageBus;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
     public function __construct(
-        MessageBusInterface $messageBus
+        MessageBusInterface $messageBus,
+        TranslatorInterface $translator
     ) {
         $this->messageBus = $messageBus;
+        $this->translator = $translator;
     }
 
     public function __invoke(ReplyToMessage $message): void
@@ -30,13 +38,11 @@ class ReplyToUnsubscriptionMessage
             return;
         }
 
-        $this->messageBus->dispatch(
-            new VkMessage(
-                'Вы успешно от уведомлений. Если захотите подписаться по новой, просто отправьте сообщение с текстом «подписаться».',
-                [
-                    $userMessage->getSender(),
-                ]
-            )
-        );
+        $this->messageBus->dispatch(new VkMessage(
+            $this->translator->trans('successful_unsubscription_command_reply', [], 'bot_messages'),
+            [
+                $userMessage->getSender(),
+            ]
+        ));
     }
 }
