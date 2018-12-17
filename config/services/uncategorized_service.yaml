@@ -7,3 +7,4 @@ services:
   App\DeserializationHandler: ~
   App\VkCallbackParser: ~
   App\UserMessageTypeDetector: ~
+  App\UserSubscriber: ~
