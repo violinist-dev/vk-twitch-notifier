@@ -944,12 +944,12 @@
             "version": "v2.6.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/doctrine2.git",
+                "url": "https://github.com/doctrine/orm.git",
                 "reference": "434820973cadf2da2d66e7184be370084cc32ca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/434820973cadf2da2d66e7184be370084cc32ca8",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/434820973cadf2da2d66e7184be370084cc32ca8",
                 "reference": "434820973cadf2da2d66e7184be370084cc32ca8",
                 "shasum": ""
             },
@@ -3054,16 +3054,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v4.1.9",
+            "version": "v4.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "3cd321eb0bb01c4541babf0a9393d96a70010eed"
+                "reference": "44da094ff23d50df40ef393a22b14fbf77f0909d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/3cd321eb0bb01c4541babf0a9393d96a70010eed",
-                "reference": "3cd321eb0bb01c4541babf0a9393d96a70010eed",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/44da094ff23d50df40ef393a22b14fbf77f0909d",
+                "reference": "44da094ff23d50df40ef393a22b14fbf77f0909d",
                 "shasum": ""
             },
             "require": {
@@ -3130,7 +3130,7 @@
             ],
             "description": "Symfony Serializer Component",
             "homepage": "https://symfony.com",
-            "time": "2018-12-02T13:22:14+00:00"
+            "time": "2019-01-03T09:05:57+00:00"
         },
         {
             "name": "symfony/translation",
