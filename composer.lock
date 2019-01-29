@@ -6330,16 +6330,16 @@
         },
         {
             "name": "symfony/dotenv",
-            "version": "v4.1.10",
+            "version": "v4.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
-                "reference": "b0872a65099eaf704bd9f80f58b26004a2a0d3ee"
+                "reference": "67feddcfa6f31f6845899514e007af7532b84663"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dotenv/zipball/b0872a65099eaf704bd9f80f58b26004a2a0d3ee",
-                "reference": "b0872a65099eaf704bd9f80f58b26004a2a0d3ee",
+                "url": "https://api.github.com/repos/symfony/dotenv/zipball/67feddcfa6f31f6845899514e007af7532b84663",
+                "reference": "67feddcfa6f31f6845899514e007af7532b84663",
                 "shasum": ""
             },
             "require": {
@@ -6383,7 +6383,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2019-01-03T09:05:57+00:00"
+            "time": "2019-01-24T21:39:39+00:00"
         },
         {
             "name": "symfony/options-resolver",
