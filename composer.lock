@@ -2827,16 +2827,16 @@
         },
         {
             "name": "symfony/messenger",
-            "version": "v4.1.10",
+            "version": "v4.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/messenger.git",
-                "reference": "6ee1e9cfb4f750016d7fb796f0c7f8d8e5dccdf8"
+                "reference": "04f038ccd833c9f31f4267c8682c288c27577cb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/messenger/zipball/6ee1e9cfb4f750016d7fb796f0c7f8d8e5dccdf8",
-                "reference": "6ee1e9cfb4f750016d7fb796f0c7f8d8e5dccdf8",
+                "url": "https://api.github.com/repos/symfony/messenger/zipball/04f038ccd833c9f31f4267c8682c288c27577cb2",
+                "reference": "04f038ccd833c9f31f4267c8682c288c27577cb2",
                 "shasum": ""
             },
             "require": {
@@ -2886,7 +2886,7 @@
             ],
             "description": "Symfony Messenger Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-03T09:05:57+00:00"
+            "time": "2019-01-16T18:35:49+00:00"
         },
         {
             "name": "symfony/orm-pack",
